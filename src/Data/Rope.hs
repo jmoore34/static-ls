@@ -36,10 +36,10 @@ import Data.Pos (Pos (..))
 import Data.Range (Range (..))
 import Data.String (IsString)
 import Data.Text (Text)
+import Data.Text qualified as T
 import Data.Text.Utf16.Rope.Mixed qualified as Rope16
 import Data.Text.Utf8.Rope qualified as Rope8
 import Prelude hiding (getLine, length, splitAt)
-import qualified Data.Text as T
 
 newtype Rope = Rope {rope :: Rope8.Rope}
   deriving (Show, Eq, Ord, Semigroup, Monoid, IsString)
