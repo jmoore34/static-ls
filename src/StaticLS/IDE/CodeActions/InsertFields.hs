@@ -2,7 +2,7 @@ module StaticLS.IDE.CodeActions.InsertFields where
 
 import Data.Text qualified as T
 import Language.LSP.Protocol.Types qualified as LSP
-import StaticLS.IDE.CodeActions.Utils (indentation, prefer, quickFix)
+import StaticLS.IDE.CodeActions.Utils (prefer, quickFix)
 
 codeAction ::
   LSP.TextDocumentIdentifier ->
@@ -10,6 +10,7 @@ codeAction ::
   T.Text ->
   Maybe T.Text ->
   [T.Text] ->
+  Int ->
   LSP.CodeAction
 codeAction = insertFields
 
@@ -19,9 +20,10 @@ insertFields ::
   T.Text ->
   Maybe T.Text ->
   [T.Text] ->
+  Int ->
   LSP.CodeAction
-insertFields tdi diag ctor existingFields missingFields =
-  let spaces = indentation diag._range <> (T.replicate 4 " ")
+insertFields tdi diag ctor existingFields missingFields leadingSpaces =
+  let spaces = T.replicate (leadingSpaces + 4) " "
       seps = "{ " : repeat ", "
       formatNewField sep fld = T.concat [spaces, sep, fld, " = _"]
       formatOldFields flds = T.concat [spaces, ", ", flds]

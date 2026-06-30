@@ -38,12 +38,13 @@ getCodeActions ::
 getCodeActions tdi ctx path lineCol = do
   rope <- getSourceRope path
   let pos = Rope.lineColToPos rope lineCol
+  let leadingSpaces = Rope.getLeadingSpaceCountAtLine lineCol.line rope
   let cx = CodeActionContext {path, pos, lineCol}
   typesCodeActions <- AddTypeSig.codeAction cx
   importCodeActions <- AutoImport.codeAction cx
   removeRedundantImports <- RemoveRedundantImports.codeAction cx
   let issues = S.fromList (mapMaybe Parse.actionableIssue ctx._diagnostics)
-  issueActions <- join <$> traverse (issueToActions tdi) (S.toList issues)
+  issueActions <- join <$> traverse (issueToActions tdi leadingSpaces) (S.toList issues)
   assistActions <-
     traverse assistToCodeAction $
       typesCodeActions
@@ -60,18 +61,19 @@ resolveLazyAssist (CodeActionMessage {kind, path}) = do
 
 issueToActions ::
   LSP.TextDocumentIdentifier ->
+  Int ->
   Parse.ActionableIssue ->
   StaticLsM [LSP.CodeAction]
-issueToActions tdi issue =
+issueToActions tdi leadingSpaces issue =
   case issue of
     Parse.MissingMethods (Parse.Ignored diag) methods ->
       pure [InsertMissingMethods.codeAction tdi diag methods]
     Parse.MissingAssociatedType (Parse.Ignored diag) ty ->
       pure [InsertAssociatedType.codeAction tdi diag ty]
     Parse.MissingFields (Parse.Ignored diag) ctor ext flds ->
-      pure [InsertFields.codeAction tdi diag ctor ext flds]
+      pure [InsertFields.codeAction tdi diag ctor ext flds leadingSpaces]
     Parse.MissingCasses (Parse.Ignored diag) pats ->
-      pure [InsertCases.codeAction tdi diag pats]
+      pure [InsertCases.codeAction tdi diag pats leadingSpaces]
     Parse.RequiredExtension (Parse.Ignored diag) ext ->
       pure [AddRequiredExtension.codeAction tdi diag ext]
     Parse.TypedHoleFits (Parse.Ignored diag) fits ->
