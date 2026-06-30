@@ -14,7 +14,7 @@ insertBelow (LSP.Range start _) =
 
 indentation :: LSP.Range -> T.Text
 indentation (LSP.Range start _) =
-  T.replicate (fromIntegral start._character + 4) " "
+  T.replicate (fromIntegral start._character) " "
 
 prefer :: LSP.CodeAction -> LSP.CodeAction
 prefer action =

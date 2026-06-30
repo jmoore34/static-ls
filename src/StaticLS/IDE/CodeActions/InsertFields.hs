@@ -21,7 +21,7 @@ insertFields ::
   [T.Text] ->
   LSP.CodeAction
 insertFields tdi diag ctor existingFields missingFields =
-  let spaces = indentation diag._range
+  let spaces = indentation diag._range <> (T.replicate 4 " ")
       seps = "{ " : repeat ", "
       formatNewField sep fld = T.concat [spaces, sep, fld, " = _"]
       formatOldFields flds = T.concat [spaces, ", ", flds]

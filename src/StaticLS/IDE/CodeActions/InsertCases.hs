@@ -10,7 +10,7 @@ codeAction = insertCases
 
 insertCases :: LSP.TextDocumentIdentifier -> LSP.Diagnostic -> [T.Text] -> LSP.CodeAction
 insertCases tdi diag pats =
-  let spaces = indentation diag._range
+  let spaces = indentation diag._range <> T.replicate 4 " "
       rng = insertBelow diag._range
-      cases = foldMap (\pat -> spaces <> pat <> " -> _") pats
-   in prefer $ quickFix tdi diag "Insert cases." rng cases
+      cases = foldMap (\pat -> spaces <> pat <> " -> _\n") pats
+   in prefer $ quickFix tdi diag "Insert missing cases" rng cases

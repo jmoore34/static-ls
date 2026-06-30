@@ -3,6 +3,11 @@ module StaticLS.IDE.CodeActions.Parse (
   Ignored (..),
   KnownExtension (..),
   actionableIssue,
+  fieldsNotInitialized,
+  normalize,
+  nonExhaustivePatterns,
+  between,
+  ident,
 ) where
 
 import Control.Applicative ((<|>))
@@ -104,7 +109,7 @@ ident :: T.Text
 ident = "[0-9A-Z'\\._a-z]+"
 
 validHoleFits :: NormalText -> Maybe [NormalText]
-validHoleFits = fmap (captures " " ident " ::\\>") . between "Valid hole fits include" "\\| "
+validHoleFits = fmap (captures " " ident " ::\\>") . between "Valid hole fits include" "\\|"
 
 missingMethods :: NormalText -> Maybe [NormalText]
 missingMethods = fmap (captures "‘" ident "’") . between "No explicit implementation for " " • In the instance declaration"
@@ -112,13 +117,16 @@ missingMethods = fmap (captures "‘" ident "’") . between "No explicit implem
 missingAssociatedType :: NormalText -> Maybe NormalText
 missingAssociatedType = capture "No explicit associated type or default declaration for ‘" ident "’"
 
+-- not matched: Nothing Just _ |
 nonExhaustivePatterns :: NormalText -> Maybe [NormalText]
-nonExhaustivePatterns = fmap (captures " " (ident <> "( _)*") " ") . between "not matched:" " \\| "
+nonExhaustivePatterns t1 = do
+  (_, _, (Normal t2)) <- cut "non-exhaustive.*not matched:" t1
+  pure . fmap normalize . filter (/= "...") . getAllTextMatches $ t2 =~ (ident <> "( _)*")
 
 fieldsNotInitialized :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
 fieldsNotInitialized t1 = do
   (_, _, t2) <- cut "Fields of ‘" t1
-  (constructor, _, t3) <- cut "’ not initialised: " t2
+  (constructor, _, t3) <- cut "’ not initialised:" t2
   (fieldsSection, _, t4) <- cut " • In the expression: " t3
   let missingFields = captures " " ident " :: " fieldsSection
   braces <- between "\\{" "\\}" t4
