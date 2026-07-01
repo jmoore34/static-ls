@@ -23,10 +23,10 @@ insertFields ::
   Int ->
   LSP.CodeAction
 insertFields tdi diag ctor existingFields missingFields leadingSpaces =
-  let spaces = T.replicate (leadingSpaces + 4) " "
+  let spaces = T.replicate (leadingSpaces + 2) " "
       seps = "{ " : repeat ", "
       formatNewField sep fld = T.concat [spaces, sep, fld, " = _"]
-      formatOldFields flds = T.concat [spaces, ", ", flds]
+      formatOldFields flds = T.concat [spaces, ", ", T.replace ", " (",\n" <> spaces) flds]
       newFields = zipWith formatNewField seps missingFields
       allFields = case existingFields of
         Nothing -> newFields

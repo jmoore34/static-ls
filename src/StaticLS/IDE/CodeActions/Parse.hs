@@ -124,21 +124,17 @@ nonExhaustivePatterns t1 = do
   pure . fmap normalize . filter (/= "...") . getAllTextMatches $ t2 =~ (ident <> "( _)*")
 
 fieldsNotInitialized :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
-fieldsNotInitialized t1 = do
-  (_, _, t2) <- cut "Fields of ‘" t1
-  (constructor, _, t3) <- cut "’ not initialised:" t2
-  (fieldsSection, _, t4) <- cut " • In the expression: " t3
-  let missingFields = captures " " ident " :: " fieldsSection
-  braces <- between "\\{" "\\}" t4
-  let existingFields = if T.null (getNormalText braces) then Nothing else Just braces
-  pure (constructor, existingFields, missingFields)
+fieldsNotInitialized = missingFields "Fields of ‘" "’ not initialised:"
 
 requiredStrictFields :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
-requiredStrictFields t1 = do
-  (_, _, t2) <- cut "Constructor ‘" t1
-  (constructor, _, t3) <- cut "’ does not have the required strict field\\(s\\):" t2
-  (fieldsSection, _, t4) <- cut "• In the expression:" t3
-  let missingFields = captures " " ident " ::" fieldsSection
-  braces <- between "\\{" "\\}" t4
+requiredStrictFields = missingFields "Constructor ‘" "’ does not have the required strict field\\(s\\):"
+
+missingFields :: T.Text -> T.Text -> NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
+missingFields beforeConstructor afterConstructor t1 = do
+  (_, _, t2) <- cut beforeConstructor t1
+  (constructor, _, t3) <- cut afterConstructor t2
+  (fieldsSection, _, t4) <- cut " •" t3
+  let missingFields = captures " " ident " :: " fieldsSection
+  braces <- between (getNormalText constructor <> " *\\{") "\\}" t4
   let existingFields = if T.null (getNormalText braces) then Nothing else Just braces
   pure (constructor, existingFields, missingFields)

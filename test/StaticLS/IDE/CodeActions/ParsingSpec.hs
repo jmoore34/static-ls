@@ -22,6 +22,19 @@ spec = do
                 In an equation for ‘person’: person = Person {}
             |]
       result `shouldBe` Just (normalize "Person", Nothing, fmap normalize ["firstName", "middleName", "lastName", "parents"])
+    it "parses missing strict fields" do
+      let result =
+            fieldsNotInitialized . normalize $
+              [trimming|
+                • Constructor ‘Person’ does not have the required strict field(s):
+                    firstName :: String
+                    middleName :: Maybe String
+                    lastName :: String
+                    parents :: [Person]
+                • In the second argument of ‘($)’, namely
+                    ‘Person {}’
+            |]
+      result `shouldBe` Just (normalize "Person", Nothing, fmap normalize ["firstName", "middleName", "lastName", "parents"])
     it "parses missing cases" do
       let result =
             nonExhaustivePatterns . normalize $
