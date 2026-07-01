@@ -24,7 +24,7 @@ spec = do
       result `shouldBe` Just (normalize "Person", Nothing, fmap normalize ["firstName", "middleName", "lastName", "parents"])
     it "parses missing strict fields" do
       let result =
-            fieldsNotInitialized . normalize $
+            requiredStrictFields . normalize $
               [trimming|
                 • Constructor ‘Person’ does not have the required strict field(s):
                     firstName :: String

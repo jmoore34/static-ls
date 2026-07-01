@@ -4,6 +4,7 @@ module StaticLS.IDE.CodeActions.Parse (
   KnownExtension (..),
   actionableIssue,
   fieldsNotInitialized,
+  requiredStrictFields,
   normalize,
   nonExhaustivePatterns,
   between,
@@ -133,8 +134,8 @@ missingFields :: T.Text -> T.Text -> NormalText -> Maybe (NormalText, Maybe Norm
 missingFields beforeConstructor afterConstructor t1 = do
   (_, _, t2) <- cut beforeConstructor t1
   (constructor, _, t3) <- cut afterConstructor t2
-  (fieldsSection, _, t4) <- cut " •" t3
+  (fieldsSection, _, t4) <- cut "•" t3
   let missingFields = captures " " ident " :: " fieldsSection
-  braces <- between (getNormalText constructor <> " *\\{") "\\}" t4
+  braces <- between (getNormalText constructor <> " \\{") "\\}" t4
   let existingFields = if T.null (getNormalText braces) then Nothing else Just braces
   pure (constructor, existingFields, missingFields)
