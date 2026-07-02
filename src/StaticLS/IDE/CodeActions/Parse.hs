@@ -3,15 +3,14 @@ module StaticLS.IDE.CodeActions.Parse (
   Ignored (..),
   KnownExtension (..),
   actionableIssue,
-  fieldsNotInitialized,
-  requiredStrictFields,
+  missingFields,
   normalize,
   nonExhaustivePatterns,
   between,
   ident,
+  getNormalText
 ) where
 
-import Control.Applicative ((<|>))
 import Control.Monad (guard, (<=<))
 import Data.Foldable (asum, toList)
 import Data.Functor (($>))
@@ -64,7 +63,7 @@ actionableIssue diag =
 
   checkMissingFields :: Maybe ActionableIssue
   checkMissingFields = do
-    (ctor, ext, flds) <- requiredStrictFields message <|> fieldsNotInitialized message
+    (ctor, ext, flds) <- missingFields message
     Just $ MissingFields (Ignored diag) (getNormalText ctor) (fmap getNormalText ext) (map getNormalText flds)
 
   checkMissingCases :: Maybe ActionableIssue
@@ -124,16 +123,10 @@ nonExhaustivePatterns t1 = do
   (_, _, (Normal t2)) <- cut "non-exhaustive.*not matched:" t1
   pure . fmap normalize . filter (/= "...") . getAllTextMatches $ t2 =~ (ident <> "( _)*")
 
-fieldsNotInitialized :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
-fieldsNotInitialized = missingFields "Fields of ‘" "’ not initialised:"
-
-requiredStrictFields :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
-requiredStrictFields = missingFields "Constructor ‘" "’ does not have the required strict field\\(s\\):"
-
-missingFields :: T.Text -> T.Text -> NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
-missingFields beforeConstructor afterConstructor t1 = do
-  (_, _, t2) <- cut beforeConstructor t1
-  (constructor, _, t3) <- cut afterConstructor t2
+missingFields :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
+missingFields  t1 = do
+  (_, _, t2) <- cut "(Fields of|Constructor) ‘" t1
+  (constructor, _, t3) <- cut "’ (not initialised:|does not have[^:]*:)" t2
   (fieldsSection, _, t4) <- cut "•" t3
   let missingFields = captures " " ident " :: " fieldsSection
   braces <- between (getNormalText constructor <> " \\{") "\\}" t4
