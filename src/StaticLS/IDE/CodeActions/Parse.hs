@@ -18,6 +18,7 @@ import Data.Text qualified as T
 import Language.Haskell.TH.LanguageExtensions (Extension)
 import Language.LSP.Protocol.Types qualified as LSP
 import Text.Regex.TDFA (getAllTextMatches, (=~), (=~~))
+import Data.Maybe (fromMaybe)
 
 -- This allows us to ignore diagnostics when comparing `ActionableIssue`s.
 -- Otherwise, we end up with duplicates with slightly different wording.
@@ -126,9 +127,10 @@ nonExhaustivePatterns t1 = do
 missingFields :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
 missingFields  t1 = do
   (_, _, t2) <- cut "(Fields of|Constructor) ‘" t1
-  (constructor, _, t3) <- cut "’ (not initialised:|does not have[^:]*:)" t2
-  (fieldsSection, _, t4) <- cut "•" t3
-  let missingFields = captures " " ident " :: " fieldsSection
-  braces <- between (getNormalText constructor <> " \\{") "\\}" t4
-  let existingFields = if T.null (getNormalText braces) then Nothing else Just braces
+  (constructor, _, t3) <- cut "’ (not initialised:|does not have[^:‘]*[:‘])" t2
+  (fieldsSection, _, t4) <- cut "[•’]" t3
+  let _missingFields = captures " " ident " :: " fieldsSection
+      missingFields = if null (_missingFields) then [fieldsSection] else _missingFields
+      braces = fromMaybe (normalize "") $ between (getNormalText constructor <> " \\{") "\\}" t4
+      existingFields = if T.null (getNormalText braces) then Nothing else Just braces
   pure (constructor, existingFields, missingFields)
