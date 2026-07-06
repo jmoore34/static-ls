@@ -8,7 +8,8 @@ module StaticLS.IDE.CodeActions.Parse (
   nonExhaustivePatterns,
   between,
   ident,
-  getNormalText
+  getNormalText,
+  missingSingleField
 ) where
 
 import Control.Monad (guard, (<=<))
@@ -37,6 +38,7 @@ data ActionableIssue
   = RequiredExtension (Ignored LSP.Diagnostic) KnownExtension
   | TypedHoleFits (Ignored LSP.Diagnostic) [T.Text]
   | MissingFields (Ignored LSP.Diagnostic) T.Text (Maybe T.Text) [T.Text]
+  | MissingSingleField (Ignored LSP.Diagnostic) T.Text
   | MissingMethods (Ignored LSP.Diagnostic) [T.Text]
   | MissingAssociatedType (Ignored LSP.Diagnostic) T.Text
   | MissingCasses (Ignored LSP.Diagnostic) [T.Text]
@@ -48,6 +50,7 @@ actionableIssue diag =
     [ checkRequiredExtensions
     , checkValidHoleFits
     , checkMissingFields
+    , checkMissingSingleField
     , checkMissingCases
     , checkMissingMethods
     , checkMissingAssociatedType
@@ -66,6 +69,12 @@ actionableIssue diag =
   checkMissingFields = do
     (ctor, ext, flds) <- missingFields message
     Just $ MissingFields (Ignored diag) (getNormalText ctor) (fmap getNormalText ext) (map getNormalText flds)
+
+  checkMissingSingleField :: Maybe ActionableIssue
+  checkMissingSingleField = do
+    missingField <- missingSingleField message
+    Just $ MissingSingleField (Ignored diag) (getNormalText missingField)
+
 
   checkMissingCases :: Maybe ActionableIssue
   checkMissingCases = MissingCasses (Ignored diag) . map getNormalText <$> nonExhaustivePatterns message
@@ -127,10 +136,14 @@ nonExhaustivePatterns t1 = do
 missingFields :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
 missingFields  t1 = do
   (_, _, t2) <- cut "(Fields of|Constructor) ‘" t1
-  (constructor, _, t3) <- cut "’ (not initialised:|does not have[^:‘]*[:‘])" t2
-  (fieldsSection, _, t4) <- cut "[•’]" t3
+  (constructor, _, t3) <- cut "’ (not initialised:|does not have[^:]*[:])" t2
+  (fieldsSection, _, t4) <- cut "[•]" t3
   let _missingFields = captures " " ident " :: " fieldsSection
       missingFields = if null (_missingFields) then [fieldsSection] else _missingFields
       braces = fromMaybe (normalize "") $ between (getNormalText constructor <> " \\{") "\\}" t4
       existingFields = if T.null (getNormalText braces) then Nothing else Just braces
   pure (constructor, existingFields, missingFields)
+
+missingSingleField :: NormalText -> Maybe NormalText
+missingSingleField  =
+  between "does not have field ‘" "’"
