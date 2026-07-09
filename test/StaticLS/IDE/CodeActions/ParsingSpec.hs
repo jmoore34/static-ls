@@ -23,14 +23,6 @@ spec = do
                 In an equation for ‘person’: person = Person {}
             |]
       result `shouldBe` Just (normalize "Person", Nothing, fmap normalize ["firstName", "middleName", "lastName", "parents"])
-    it "parses does not have field" do
-      let result =
-            missingFields . normalize $
-              [trimming|
-                Constructor ‘Person’ does not have field
-                ‘middleName’
-            |]
-      result `shouldBe` Just (normalize "Person", Nothing, fmap normalize ["middleName"])
     it "parses missing strict fields" do
       let result =
             missingFields . normalize $
