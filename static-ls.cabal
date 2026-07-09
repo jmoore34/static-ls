@@ -159,7 +159,6 @@ library
     StaticLS.IDE.CodeActions.InsertAssociatedType
     StaticLS.IDE.CodeActions.InsertCases
     StaticLS.IDE.CodeActions.InsertFields
-    StaticLS.IDE.CodeActions.InsertSingleField
     StaticLS.IDE.CodeActions.InsertMissingMethods
     StaticLS.IDE.CodeActions.Parse
     StaticLS.IDE.CodeActions.RemoveRedundantImports

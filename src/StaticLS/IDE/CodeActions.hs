@@ -28,7 +28,6 @@ import StaticLS.IDE.SourceEdit (SourceEdit)
 import StaticLS.IDE.SourceEdit qualified as SourceEdit
 import StaticLS.Monad (StaticLsM)
 import StaticLS.ProtoLSP (assistToCodeAction)
-import qualified StaticLS.IDE.CodeActions.InsertSingleField as InsertSingleField
 
 getCodeActions ::
   LSP.TextDocumentIdentifier ->
@@ -73,8 +72,6 @@ issueToActions tdi leadingSpaces issue =
       pure [InsertAssociatedType.codeAction tdi diag ty]
     Parse.MissingFields (Parse.Ignored diag) ctor ext flds ->
       pure [InsertFields.codeAction tdi diag ctor ext flds leadingSpaces]
-    Parse.MissingSingleField (Parse.Ignored diag) field -> 
-      pure [InsertSingleField.codeAction tdi diag field leadingSpaces]
     Parse.MissingCasses (Parse.Ignored diag) pats ->
       pure [InsertCases.codeAction tdi diag pats leadingSpaces]
     Parse.RequiredExtension (Parse.Ignored diag) ext ->
