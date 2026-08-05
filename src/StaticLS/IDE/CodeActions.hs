@@ -72,7 +72,7 @@ issueToActions tdi leadingSpaces issue =
       pure [InsertAssociatedType.codeAction tdi diag ty]
     Parse.MissingFields (Parse.Ignored diag) ctor ext flds ->
       pure [InsertFields.codeAction tdi diag ctor ext flds leadingSpaces]
-    Parse.MissingCasses (Parse.Ignored diag) pats ->
+    Parse.MissingCases (Parse.Ignored diag) pats ->
       pure [InsertCases.codeAction tdi diag pats leadingSpaces]
     Parse.RequiredExtension (Parse.Ignored diag) ext ->
       pure [AddRequiredExtension.codeAction tdi diag ext]

@@ -38,7 +38,7 @@ data ActionableIssue
   | MissingFields (Ignored LSP.Diagnostic) T.Text (Maybe T.Text) [T.Text]
   | MissingMethods (Ignored LSP.Diagnostic) [T.Text]
   | MissingAssociatedType (Ignored LSP.Diagnostic) T.Text
-  | MissingCasses (Ignored LSP.Diagnostic) [T.Text]
+  | MissingCases (Ignored LSP.Diagnostic) [T.Text]
   deriving (Eq, Ord, Show)
 
 actionableIssue :: LSP.Diagnostic -> Maybe ActionableIssue
@@ -67,7 +67,7 @@ actionableIssue diag =
     Just $ MissingFields (Ignored diag) (getNormalText ctor) (fmap getNormalText ext) (map getNormalText flds)
 
   checkMissingCases :: Maybe ActionableIssue
-  checkMissingCases = MissingCasses (Ignored diag) . map getNormalText <$> nonExhaustivePatterns message
+  checkMissingCases = MissingCases (Ignored diag) . map getNormalText <$> nonExhaustivePatterns message
 
   checkValidHoleFits :: Maybe ActionableIssue
   checkValidHoleFits = TypedHoleFits (Ignored diag) . map getNormalText <$> validHoleFits message
