@@ -5,11 +5,11 @@ module StaticLS.IDE.CodeActions.ParsingSpec (spec) where
 import NeatInterpolation
 import StaticLS.IDE.CodeActions.InsertFields
 import StaticLS.IDE.CodeActions.Parse
-import Test.Hspec (Spec, fdescribe, it, shouldBe)
+import Test.Hspec (Spec, describe, it, shouldBe)
 
 spec :: Spec
 spec = do
-  fdescribe "parsing to support code actions" do
+  describe "parsing to support code actions" do
     it "parses fields not initialized" do
       let result =
             missingFields . normalize $
