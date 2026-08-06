@@ -139,7 +139,6 @@ addOperatorParentheses (Normal text) =
 missingAssociatedType :: NormalText -> Maybe NormalText
 missingAssociatedType = capture "No explicit associated type or default declaration for ‘" ident "’"
 
--- not matched: Nothing Just _ |
 nonExhaustivePatterns :: NormalText -> Maybe [NormalText]
 nonExhaustivePatterns t1 = do
   (_, _, (Normal t2)) <- cut "non-exhaustive.*not matched:" t1
