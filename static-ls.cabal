@@ -1,27 +1,28 @@
 cabal-version: 2.0
+
 -- This file has been generated from package.yaml by hpack version 0.37.0.
 --
 -- see: https://github.com/sol/hpack
-name: static-ls
-version: 1.0.0
-synopsis: See README on Github for more information
-description: static-ls ("static language server") reads static project information to provide IDE functionality through the language server protocol. static-ls will not generate this information on its own and instead will rely on the user to generate this information via separate programs
-category: Development
-homepage: https://github.com/josephsumabat/static-ls#readme
-bug-reports: https://github.com/josephsumabat/static-ls/issues
-author: Joseph Sumabat
-maintainer: josephrsumabat@gmail.com
-license: MIT
-license-file: LICENSE
-build-type: Simple
-tested-with:
-  ghc ==9.4.4
-  ghc ==9.6.3
-  ghc ==9.12.2
 
+name:           static-ls
+version:        1.0.0
+synopsis:       See README on Github for more information
+description:    static-ls ("static language server") reads static project information to provide IDE functionality through the language server protocol. static-ls will not generate this information on its own and instead will rely on the user to generate this information via separate programs
+category:       Development
+homepage:       https://github.com/josephsumabat/static-ls#readme
+bug-reports:    https://github.com/josephsumabat/static-ls/issues
+author:         Joseph Sumabat
+maintainer:     josephrsumabat@gmail.com
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+tested-with:
+    GHC == 9.4.4
+  , GHC == 9.6.3
+  , GHC == 9.12.2
 extra-doc-files:
-  CHANGELOG.md
-  README.md
+    README.md
+    CHANGELOG.md
 
 source-repository head
   type: git
@@ -34,603 +35,496 @@ flag dev
 
 library
   hs-source-dirs:
-    src
-
+      src
   default-extensions:
-    BlockArguments
-    DataKinds
-    DuplicateRecordFields
-    ExplicitNamespaces
-    LambdaCase
-    NoFieldSelectors
-    OverloadedRecordDot
-    OverloadedStrings
-    PatternSynonyms
-    ViewPatterns
-
-  ghc-options:
-    -Wall
-    -Wno-name-shadowing
-    -Wincomplete-record-updates
-    -fwrite-ide-info
-    -hiedir
-    test/TestData/.hiefiles
-    -haddock
-
+      LambdaCase
+      ExplicitNamespaces
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      DuplicateRecordFields
+      DataKinds
+      PatternSynonyms
+      BlockArguments
+      ViewPatterns
+  ghc-options: -Wall -Wno-name-shadowing -Wincomplete-record-updates -fwrite-ide-info -hiedir test/TestData/.hiefiles -haddock
   build-depends:
-    Diff,
-    aeson >=2 && <2.3,
-    array >=0.5.4 && <0.6,
-    async,
-    base >=4.17.0 && <4.22,
-    bytestring >=0.10 && <0.13,
-    co-log-core >=0.3 && <0.4,
-    containers >=0.6.0 && <0.8,
-    cryptohash-md5,
-    directory >=1.3.7 && <1.4,
-    errors >=2.3.0 && <2.4,
-    exceptions,
-    extra >=1.7.12 && <1.9,
-    filepath,
-    fsnotify,
-    ghc >=9.4.3 && <9.13,
-    ghc-paths >=0.1.0 && <0.2,
-    hashable,
-    haskell-ast,
-    haskell-lexer >=1.1.1 && <1.3,
-    hiedb >=0.6 && <0.7,
-    lens,
-    lsp >=2.4.0.0 && <2.8.0.0,
-    lsp-types >=2.1.0.0 && <2.4.0.0,
-    mtl >=2.2.2 && <2.4,
-    neat-interpolation,
-    optics,
-    parsec >=3.1.0 && <3.2,
-    pretty-simple,
-    raw-strings-qq,
-    regex-tdfa,
-    row-types,
-    sqlite-simple >=0.4.18 && <0.5,
-    stm,
-    template-haskell >=2.19.0 && <2.24,
-    text >=2.0.1 && <2.2,
-    text-range,
-    text-rope ==0.3,
-    time >=1.0 && <2.0,
-    transformers >=0.5.6.2 && <0.7,
-    tree-sitter-ast,
-    tree-sitter-haskell,
-    tree-sitter-simple,
-    typed-process,
-    unliftio >=0.2.1 && <0.3,
-    unliftio-core >=0.2.1 && <0.3,
-    unordered-containers >=0.2 && <0.3
-
+      Diff
+    , aeson >=2 && <2.3
+    , array >=0.5.4 && <0.6
+    , async
+    , base >=4.17.0 && <4.22
+    , bytestring >=0.10 && <0.13
+    , co-log-core ==0.3.*
+    , containers >=0.6.0 && <0.8
+    , cryptohash-md5
+    , directory >=1.3.7 && <1.4
+    , errors >=2.3.0 && <2.4
+    , exceptions
+    , extra >=1.7.12 && <1.9
+    , filepath
+    , fsnotify
+    , ghc >=9.4.3 && <9.13
+    , ghc-paths >=0.1.0 && <0.2
+    , hashable
+    , haskell-ast
+    , haskell-lexer >=1.1.1 && <1.3
+    , hiedb ==0.6.*
+    , lens
+    , lsp >=2.4.0.0 && <2.8.0.0
+    , lsp-types >=2.1.0.0 && <2.4.0.0
+    , mtl >=2.2.2 && <2.4
+    , neat-interpolation
+    , optics
+    , parsec >=3.1.0 && <3.2
+    , pretty-simple
+    , raw-strings-qq
+    , regex-tdfa
+    , row-types
+    , sqlite-simple >=0.4.18 && <0.5
+    , stm
+    , template-haskell >=2.19.0 && <2.24
+    , text >=2.0.1 && <2.2
+    , text-range
+    , text-rope ==0.3
+    , time >=1.0 && <2.0
+    , transformers >=0.5.6.2 && <0.7
+    , tree-sitter-ast
+    , tree-sitter-haskell
+    , tree-sitter-simple
+    , typed-process
+    , unliftio >=0.2.1 && <0.3
+    , unliftio-core >=0.2.1 && <0.3
+    , unordered-containers ==0.2.*
   default-language: GHC2021
-
   if flag(dev)
-    ghc-options:
-      -fwrite-ide-info
-      -hiedir
-      .hiefiles
-      -fdefer-type-errors
-      -fno-defer-typed-holes
-      -Werror=deferred-type-errors
-      -Werror=deferred-out-of-scope-variables
+    ghc-options: -fwrite-ide-info -hiedir .hiefiles -fdefer-type-errors -fno-defer-typed-holes -Werror=deferred-type-errors -Werror=deferred-out-of-scope-variables
   exposed-modules:
-    Data.Change
-    Data.ConcurrentCache
-    Data.Diff
-    Data.Edit
-    Data.ListUtils
-    Data.Path
-    Data.RangeMap
-    Data.Rope
-    Data.TextUtils
-    StaticLS.Except
-    StaticLS.FilePath
-    StaticLS.GhcidSession
-    StaticLS.HI
-    StaticLS.HI.File
-    StaticLS.HIE.File
-    StaticLS.HIE.File.Except
-    StaticLS.HIE.Position
-    StaticLS.Handlers
-    StaticLS.HieDb
-    StaticLS.HieView
-    StaticLS.HieView.InternStr
-    StaticLS.HieView.Name
-    StaticLS.HieView.Query
-    StaticLS.HieView.Type
-    StaticLS.HieView.Utils
-    StaticLS.HieView.View
-    StaticLS.Hir
-    StaticLS.Hir.Make
-    StaticLS.Hir.Name
-    StaticLS.Hir.Parse
-    StaticLS.Hir.Print
-    StaticLS.Hir.Types
-    StaticLS.IDE.AllExtensions
-    StaticLS.IDE.CodeActions
-    StaticLS.IDE.CodeActions.AddRequiredExtension
-    StaticLS.IDE.CodeActions.AddTypeSig
-    StaticLS.IDE.CodeActions.AutoExport
-    StaticLS.IDE.CodeActions.AutoImport
-    StaticLS.IDE.CodeActions.InsertAssociatedType
-    StaticLS.IDE.CodeActions.InsertCases
-    StaticLS.IDE.CodeActions.InsertFields
-    StaticLS.IDE.CodeActions.InsertMissingMethods
-    StaticLS.IDE.CodeActions.Parse
-    StaticLS.IDE.CodeActions.RemoveRedundantImports
-    StaticLS.IDE.CodeActions.Types
-    StaticLS.IDE.CodeActions.UseValidHoleFit
-    StaticLS.IDE.CodeActions.Utils
-    StaticLS.IDE.Completion
-    StaticLS.IDE.CompletionItemKind
-    StaticLS.IDE.Definition
-    StaticLS.IDE.Diagnostics
-    StaticLS.IDE.Diagnostics.ParseGHC
-    StaticLS.IDE.DocumentSymbols
-    StaticLS.IDE.FileWith
-    StaticLS.IDE.Format
-    StaticLS.IDE.HiePos
-    StaticLS.IDE.Hover
-    StaticLS.IDE.Hover.Info
-    StaticLS.IDE.Implementation
-    StaticLS.IDE.InlayHints
-    StaticLS.IDE.InlayHints.Common
-    StaticLS.IDE.InlayHints.TypeAnnotations
-    StaticLS.IDE.InlayHints.Types
-    StaticLS.IDE.InlayHints.Wildcard
-    StaticLS.IDE.Monad
-    StaticLS.IDE.References
-    StaticLS.IDE.Rename
-    StaticLS.IDE.SourceEdit
-    StaticLS.IDE.SymbolKind
-    StaticLS.IDE.Utils
-    StaticLS.IDE.Workspace.Symbol
-    StaticLS.Logger
-    StaticLS.Maybe
-    StaticLS.Monad
-    StaticLS.PositionDiff
-    StaticLS.ProtoLSP
-    StaticLS.SDoc
-    StaticLS.Semantic
-    StaticLS.Semantic.Types
-    StaticLS.Server
-    StaticLS.SrcFiles
-    StaticLS.StaticEnv
-    StaticLS.StaticEnv.Options
-    StaticLS.Tree
-    StaticLS.Utils
-
+      Data.Change
+      Data.ConcurrentCache
+      Data.Diff
+      Data.Edit
+      Data.ListUtils
+      Data.Path
+      Data.RangeMap
+      Data.Rope
+      Data.TextUtils
+      StaticLS.Except
+      StaticLS.FilePath
+      StaticLS.Handlers
+      StaticLS.HI
+      StaticLS.HI.File
+      StaticLS.HIE.File
+      StaticLS.HIE.File.Except
+      StaticLS.HIE.Position
+      StaticLS.HieDb
+      StaticLS.HieView
+      StaticLS.HieView.InternStr
+      StaticLS.HieView.Name
+      StaticLS.HieView.Query
+      StaticLS.HieView.Type
+      StaticLS.HieView.Utils
+      StaticLS.HieView.View
+      StaticLS.Hir
+      StaticLS.Hir.Make
+      StaticLS.Hir.Name
+      StaticLS.Hir.Parse
+      StaticLS.Hir.Print
+      StaticLS.Hir.Types
+      StaticLS.IDE.AllExtensions
+      StaticLS.IDE.CodeActions
+      StaticLS.IDE.CodeActions.AddRequiredExtension
+      StaticLS.IDE.CodeActions.AddTypeSig
+      StaticLS.IDE.CodeActions.AutoExport
+      StaticLS.IDE.CodeActions.AutoImport
+      StaticLS.IDE.CodeActions.InsertAssociatedType
+      StaticLS.IDE.CodeActions.InsertCases
+      StaticLS.IDE.CodeActions.InsertFields
+      StaticLS.IDE.CodeActions.InsertMissingMethods
+      StaticLS.IDE.CodeActions.Parse
+      StaticLS.IDE.CodeActions.RemoveRedundantImports
+      StaticLS.IDE.CodeActions.Types
+      StaticLS.IDE.CodeActions.UseValidHoleFit
+      StaticLS.IDE.CodeActions.Utils
+      StaticLS.IDE.Completion
+      StaticLS.IDE.CompletionItemKind
+      StaticLS.IDE.Definition
+      StaticLS.IDE.Diagnostics
+      StaticLS.IDE.Diagnostics.ParseGHC
+      StaticLS.IDE.DocumentSymbols
+      StaticLS.IDE.FileWith
+      StaticLS.IDE.Format
+      StaticLS.IDE.HiePos
+      StaticLS.IDE.Hover
+      StaticLS.IDE.Hover.Info
+      StaticLS.IDE.Implementation
+      StaticLS.IDE.InlayHints
+      StaticLS.IDE.InlayHints.Common
+      StaticLS.IDE.InlayHints.TypeAnnotations
+      StaticLS.IDE.InlayHints.Types
+      StaticLS.IDE.InlayHints.Wildcard
+      StaticLS.IDE.Monad
+      StaticLS.IDE.References
+      StaticLS.IDE.Rename
+      StaticLS.IDE.SourceEdit
+      StaticLS.IDE.SymbolKind
+      StaticLS.IDE.Utils
+      StaticLS.IDE.Workspace.Symbol
+      StaticLS.Logger
+      StaticLS.Maybe
+      StaticLS.Monad
+      StaticLS.PositionDiff
+      StaticLS.ProtoLSP
+      StaticLS.SDoc
+      StaticLS.Semantic
+      StaticLS.Semantic.Types
+      StaticLS.Server
+      StaticLS.SrcFiles
+      StaticLS.StaticEnv
+      StaticLS.StaticEnv.Options
+      StaticLS.Tree
+      StaticLS.Utils
+      StaticLS.GhcidSession
   other-modules:
-    Paths_static_ls
-
+      Paths_static_ls
   autogen-modules:
-    Paths_static_ls
+      Paths_static_ls
 
 executable print-hie
   hs-source-dirs:
-    print
-
+      print
   main-is: Main.hs
   other-modules:
-    Paths_static_ls
-
+      Paths_static_ls
   autogen-modules:
-    Paths_static_ls
-
+      Paths_static_ls
   default-extensions:
-    BlockArguments
-    DataKinds
-    DuplicateRecordFields
-    ExplicitNamespaces
-    LambdaCase
-    NoFieldSelectors
-    OverloadedRecordDot
-    OverloadedStrings
-    PatternSynonyms
-    ViewPatterns
-
-  ghc-options:
-    -Wall
-    -Wno-name-shadowing
-    -Wincomplete-record-updates
-    -threaded
-    -rtsopts
-    -with-rtsopts=-N
-
+      LambdaCase
+      ExplicitNamespaces
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      DuplicateRecordFields
+      DataKinds
+      PatternSynonyms
+      BlockArguments
+      ViewPatterns
+  ghc-options: -Wall -Wno-name-shadowing -Wincomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-    Diff,
-    aeson >=2 && <2.3,
-    array >=0.5.4 && <0.6,
-    async,
-    base >=4.17.0 && <4.22,
-    bytestring >=0.10 && <0.13,
-    co-log-core >=0.3 && <0.4,
-    containers >=0.6.0 && <0.8,
-    cryptohash-md5,
-    directory >=1.3.7 && <1.4,
-    errors >=2.3.0 && <2.4,
-    exceptions,
-    extra >=1.7.12 && <1.9,
-    filepath,
-    fsnotify,
-    ghc >=9.4.3 && <9.13,
-    ghc-paths >=0.1.0 && <0.2,
-    hashable,
-    haskell-ast,
-    haskell-lexer >=1.1.1 && <1.3,
-    hiedb >=0.6 && <0.7,
-    lens,
-    lsp >=2.4.0.0 && <2.8.0.0,
-    lsp-types >=2.1.0.0 && <2.4.0.0,
-    mtl >=2.2.2 && <2.4,
-    neat-interpolation,
-    optics,
-    optparse-applicative >=0.17.0.0 && <0.19,
-    parsec >=3.1.0 && <3.2,
-    pretty-simple,
-    raw-strings-qq,
-    regex-tdfa,
-    row-types,
-    sqlite-simple >=0.4.18 && <0.5,
-    static-ls,
-    stm,
-    template-haskell >=2.19.0 && <2.24,
-    text >=2.0.1 && <2.2,
-    text-range,
-    text-rope ==0.3,
-    time >=1.0 && <2.0,
-    transformers >=0.5.6.2 && <0.7,
-    tree-sitter-ast,
-    tree-sitter-haskell,
-    tree-sitter-simple,
-    typed-process,
-    unliftio >=0.2.1 && <0.3,
-    unliftio-core >=0.2.1 && <0.3,
-    unordered-containers >=0.2 && <0.3
-
+      Diff
+    , aeson >=2 && <2.3
+    , array >=0.5.4 && <0.6
+    , async
+    , base >=4.17.0 && <4.22
+    , bytestring >=0.10 && <0.13
+    , co-log-core ==0.3.*
+    , containers >=0.6.0 && <0.8
+    , cryptohash-md5
+    , directory >=1.3.7 && <1.4
+    , errors >=2.3.0 && <2.4
+    , exceptions
+    , extra >=1.7.12 && <1.9
+    , filepath
+    , fsnotify
+    , ghc >=9.4.3 && <9.13
+    , ghc-paths >=0.1.0 && <0.2
+    , hashable
+    , haskell-ast
+    , haskell-lexer >=1.1.1 && <1.3
+    , hiedb ==0.6.*
+    , lens
+    , lsp >=2.4.0.0 && <2.8.0.0
+    , lsp-types >=2.1.0.0 && <2.4.0.0
+    , mtl >=2.2.2 && <2.4
+    , neat-interpolation
+    , optics
+    , optparse-applicative >=0.17.0.0 && <0.19
+    , parsec >=3.1.0 && <3.2
+    , pretty-simple
+    , raw-strings-qq
+    , regex-tdfa
+    , row-types
+    , sqlite-simple >=0.4.18 && <0.5
+    , static-ls
+    , stm
+    , template-haskell >=2.19.0 && <2.24
+    , text >=2.0.1 && <2.2
+    , text-range
+    , text-rope ==0.3
+    , time >=1.0 && <2.0
+    , transformers >=0.5.6.2 && <0.7
+    , tree-sitter-ast
+    , tree-sitter-haskell
+    , tree-sitter-simple
+    , typed-process
+    , unliftio >=0.2.1 && <0.3
+    , unliftio-core >=0.2.1 && <0.3
+    , unordered-containers ==0.2.*
   default-language: GHC2021
-
   if flag(dev)
-    ghc-options:
-      -fwrite-ide-info
-      -hiedir
-      .hiefiles
-      -fdefer-type-errors
-      -fno-defer-typed-holes
-      -Werror=deferred-type-errors
-      -Werror=deferred-out-of-scope-variables
+    ghc-options: -fwrite-ide-info -hiedir .hiefiles -fdefer-type-errors -fno-defer-typed-holes -Werror=deferred-type-errors -Werror=deferred-out-of-scope-variables
 
 executable static-ls
   hs-source-dirs:
-    app
-
+      app
   default-extensions:
-    BlockArguments
-    DataKinds
-    DuplicateRecordFields
-    ExplicitNamespaces
-    LambdaCase
-    NoFieldSelectors
-    OverloadedRecordDot
-    OverloadedStrings
-    PatternSynonyms
-    ViewPatterns
-
-  ghc-options:
-    -Wall
-    -Wno-name-shadowing
-    -Wincomplete-record-updates
-    -threaded
-    -rtsopts
-    -with-rtsopts=-N
-
+      LambdaCase
+      ExplicitNamespaces
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      DuplicateRecordFields
+      DataKinds
+      PatternSynonyms
+      BlockArguments
+      ViewPatterns
+  ghc-options: -Wall -Wno-name-shadowing -Wincomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-    Diff,
-    aeson >=2 && <2.3,
-    array >=0.5.4 && <0.6,
-    async,
-    base >=4.17.0 && <4.22,
-    bytestring >=0.10 && <0.13,
-    co-log-core >=0.3 && <0.4,
-    containers >=0.6.0 && <0.8,
-    cryptohash-md5,
-    directory >=1.3.7 && <1.4,
-    errors >=2.3.0 && <2.4,
-    exceptions,
-    extra >=1.7.12 && <1.9,
-    filepath,
-    fsnotify,
-    ghc >=9.4.3 && <9.13,
-    ghc-paths >=0.1.0 && <0.2,
-    hashable,
-    haskell-ast,
-    haskell-lexer >=1.1.1 && <1.3,
-    hiedb >=0.6 && <0.7,
-    lens,
-    lsp >=2.4.0.0 && <2.8.0.0,
-    lsp-types >=2.1.0.0 && <2.4.0.0,
-    mtl >=2.2.2 && <2.4,
-    neat-interpolation,
-    optics,
-    optparse-applicative >=0.17.0.0 && <0.19,
-    parsec >=3.1.0 && <3.2,
-    pretty-simple,
-    raw-strings-qq,
-    regex-tdfa,
-    row-types,
-    sqlite-simple >=0.4.18 && <0.5,
-    static-ls,
-    stm,
-    template-haskell >=2.19.0 && <2.24,
-    text >=2.0.1 && <2.2,
-    text-range,
-    text-rope ==0.3,
-    time >=1.0 && <2.0,
-    transformers >=0.5.6.2 && <0.7,
-    tree-sitter-ast,
-    tree-sitter-haskell,
-    tree-sitter-simple,
-    typed-process,
-    unliftio >=0.2.1 && <0.3,
-    unliftio-core >=0.2.1 && <0.3,
-    unordered-containers >=0.2 && <0.3
-
+      Diff
+    , aeson >=2 && <2.3
+    , array >=0.5.4 && <0.6
+    , async
+    , base >=4.17.0 && <4.22
+    , bytestring >=0.10 && <0.13
+    , co-log-core ==0.3.*
+    , containers >=0.6.0 && <0.8
+    , cryptohash-md5
+    , directory >=1.3.7 && <1.4
+    , errors >=2.3.0 && <2.4
+    , exceptions
+    , extra >=1.7.12 && <1.9
+    , filepath
+    , fsnotify
+    , ghc >=9.4.3 && <9.13
+    , ghc-paths >=0.1.0 && <0.2
+    , hashable
+    , haskell-ast
+    , haskell-lexer >=1.1.1 && <1.3
+    , hiedb ==0.6.*
+    , lens
+    , lsp >=2.4.0.0 && <2.8.0.0
+    , lsp-types >=2.1.0.0 && <2.4.0.0
+    , mtl >=2.2.2 && <2.4
+    , neat-interpolation
+    , optics
+    , optparse-applicative >=0.17.0.0 && <0.19
+    , parsec >=3.1.0 && <3.2
+    , pretty-simple
+    , raw-strings-qq
+    , regex-tdfa
+    , row-types
+    , sqlite-simple >=0.4.18 && <0.5
+    , static-ls
+    , stm
+    , template-haskell >=2.19.0 && <2.24
+    , text >=2.0.1 && <2.2
+    , text-range
+    , text-rope ==0.3
+    , time >=1.0 && <2.0
+    , transformers >=0.5.6.2 && <0.7
+    , tree-sitter-ast
+    , tree-sitter-haskell
+    , tree-sitter-simple
+    , typed-process
+    , unliftio >=0.2.1 && <0.3
+    , unliftio-core >=0.2.1 && <0.3
+    , unordered-containers ==0.2.*
   default-language: GHC2021
-
   if flag(dev)
-    ghc-options:
-      -fwrite-ide-info
-      -hiedir
-      .hiefiles
-      -fdefer-type-errors
-      -fno-defer-typed-holes
-      -Werror=deferred-type-errors
-      -Werror=deferred-out-of-scope-variables
+    ghc-options: -fwrite-ide-info -hiedir .hiefiles -fdefer-type-errors -fno-defer-typed-holes -Werror=deferred-type-errors -Werror=deferred-out-of-scope-variables
   main-is: Main.hs
   other-modules:
-    App.Arguments
-    App.Configuration
-    App.Ghcid
-    Paths_static_ls
-
+      App.Arguments
+      App.Configuration
+      App.Ghcid
+      Paths_static_ls
   autogen-modules:
-    Paths_static_ls
+      Paths_static_ls
 
 test-suite expect_tests
   type: exitcode-stdio-1.0
   main-is: Main.hs
   other-modules:
-    HirTest
-    Paths_static_ls
-
+      HirTest
+      Paths_static_ls
   autogen-modules:
-    Paths_static_ls
-
+      Paths_static_ls
   hs-source-dirs:
-    expect_tests
-
+      expect_tests
   default-extensions:
-    BlockArguments
-    DataKinds
-    DuplicateRecordFields
-    ExplicitNamespaces
-    LambdaCase
-    NoFieldSelectors
-    OverloadedRecordDot
-    OverloadedStrings
-    PatternSynonyms
-    ViewPatterns
-
-  ghc-options:
-    -Wall
-    -Wno-name-shadowing
-    -Wincomplete-record-updates
-    -threaded
-    -rtsopts
-    -with-rtsopts=-N
-
+      LambdaCase
+      ExplicitNamespaces
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      DuplicateRecordFields
+      DataKinds
+      PatternSynonyms
+      BlockArguments
+      ViewPatterns
+  ghc-options: -Wall -Wno-name-shadowing -Wincomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-    Diff,
-    QuickCheck,
-    aeson >=2 && <2.3,
-    array >=0.5.4 && <0.6,
-    async,
-    base >=4.17.0 && <4.22,
-    bytestring >=0.10 && <0.13,
-    co-log-core >=0.3 && <0.4,
-    containers >=0.6.0 && <0.8,
-    cryptohash-md5,
-    directory >=1.3.7 && <1.4,
-    errors >=2.3.0 && <2.4,
-    exceptions,
-    extra >=1.7.12 && <1.9,
-    filepath,
-    fsnotify,
-    ghc >=9.4.3 && <9.13,
-    ghc-paths >=0.1.0 && <0.2,
-    hashable,
-    haskell-ast,
-    haskell-lexer >=1.1.1 && <1.3,
-    hiedb >=0.6 && <0.7,
-    hspec >=2 && <3,
-    lens,
-    lsp >=2.4.0.0 && <2.8.0.0,
-    lsp-types >=2.1.0.0 && <2.4.0.0,
-    mtl >=2.2.2 && <2.4,
-    neat-interpolation,
-    optics,
-    parsec >=3.1.0 && <3.2,
-    pretty-simple,
-    quickcheck-instances,
-    raw-strings-qq,
-    regex-tdfa,
-    row-types,
-    sqlite-simple >=0.4.18 && <0.5,
-    static-ls,
-    stm,
-    tasty,
-    tasty-expect,
-    template-haskell >=2.19.0 && <2.24,
-    text >=2.0.1 && <2.2,
-    text-range,
-    text-rope ==0.3,
-    time >=1.0 && <2.0,
-    transformers >=0.5.6.2 && <0.7,
-    tree-sitter-ast,
-    tree-sitter-haskell,
-    tree-sitter-simple,
-    typed-process,
-    unliftio >=0.2.1 && <0.3,
-    unliftio-core >=0.2.1 && <0.3,
-    unordered-containers >=0.2 && <0.3
-
+      Diff
+    , QuickCheck
+    , aeson >=2 && <2.3
+    , array >=0.5.4 && <0.6
+    , async
+    , base >=4.17.0 && <4.22
+    , bytestring >=0.10 && <0.13
+    , co-log-core ==0.3.*
+    , containers >=0.6.0 && <0.8
+    , cryptohash-md5
+    , directory >=1.3.7 && <1.4
+    , errors >=2.3.0 && <2.4
+    , exceptions
+    , extra >=1.7.12 && <1.9
+    , filepath
+    , fsnotify
+    , ghc >=9.4.3 && <9.13
+    , ghc-paths >=0.1.0 && <0.2
+    , hashable
+    , haskell-ast
+    , haskell-lexer >=1.1.1 && <1.3
+    , hiedb ==0.6.*
+    , hspec ==2.*
+    , lens
+    , lsp >=2.4.0.0 && <2.8.0.0
+    , lsp-types >=2.1.0.0 && <2.4.0.0
+    , mtl >=2.2.2 && <2.4
+    , neat-interpolation
+    , optics
+    , parsec >=3.1.0 && <3.2
+    , pretty-simple
+    , quickcheck-instances
+    , raw-strings-qq
+    , regex-tdfa
+    , row-types
+    , sqlite-simple >=0.4.18 && <0.5
+    , static-ls
+    , stm
+    , tasty
+    , tasty-expect
+    , template-haskell >=2.19.0 && <2.24
+    , text >=2.0.1 && <2.2
+    , text-range
+    , text-rope ==0.3
+    , time >=1.0 && <2.0
+    , transformers >=0.5.6.2 && <0.7
+    , tree-sitter-ast
+    , tree-sitter-haskell
+    , tree-sitter-simple
+    , typed-process
+    , unliftio >=0.2.1 && <0.3
+    , unliftio-core >=0.2.1 && <0.3
+    , unordered-containers ==0.2.*
   default-language: GHC2021
-
   if flag(dev)
-    ghc-options:
-      -fwrite-ide-info
-      -hiedir
-      .hiefiles
-      -fdefer-type-errors
-      -fno-defer-typed-holes
-      -Werror=deferred-type-errors
-      -Werror=deferred-out-of-scope-variables
+    ghc-options: -fwrite-ide-info -hiedir .hiefiles -fdefer-type-errors -fno-defer-typed-holes -Werror=deferred-type-errors -Werror=deferred-out-of-scope-variables
 
 test-suite static-ls-test
   type: exitcode-stdio-1.0
   hs-source-dirs:
-    test
-
+      test
   default-extensions:
-    BlockArguments
-    DataKinds
-    DuplicateRecordFields
-    ExplicitNamespaces
-    LambdaCase
-    NoFieldSelectors
-    OverloadedRecordDot
-    OverloadedStrings
-    PatternSynonyms
-    ViewPatterns
-
-  ghc-options:
-    -Wall
-    -Wno-name-shadowing
-    -Wincomplete-record-updates
-    -fwrite-ide-info
-    -fwrite-interface
-    -hiedir
-    test/TestData/.hiefiles
-    -hidir
-    test/TestData/.hifiles
-    -haddock
-    -threaded
-    -rtsopts
-    -with-rtsopts=-N
-
+      LambdaCase
+      ExplicitNamespaces
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      DuplicateRecordFields
+      DataKinds
+      PatternSynonyms
+      BlockArguments
+      ViewPatterns
+  ghc-options: -Wall -Wno-name-shadowing -Wincomplete-record-updates -fwrite-ide-info -fwrite-interface -hiedir test/TestData/.hiefiles -hidir test/TestData/.hifiles -haddock -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-    Diff,
-    QuickCheck,
-    aeson >=2 && <2.3,
-    array >=0.5.4 && <0.6,
-    async,
-    base >=4.17.0 && <4.22,
-    bytestring >=0.10 && <0.13,
-    co-log-core >=0.3 && <0.4,
-    containers >=0.6.0 && <0.8,
-    cryptohash-md5,
-    directory >=1.3.7 && <1.4,
-    errors >=2.3.0 && <2.4,
-    exceptions,
-    extra >=1.7.12 && <1.9,
-    filepath,
-    fsnotify,
-    ghc >=9.4.3 && <9.13,
-    ghc-paths >=0.1.0 && <0.2,
-    hashable,
-    haskell-ast,
-    haskell-lexer >=1.1.1 && <1.3,
-    hiedb >=0.6 && <0.7,
-    hspec >=2 && <3,
-    lens,
-    lsp >=2.4.0.0 && <2.8.0.0,
-    lsp-types >=2.1.0.0 && <2.4.0.0,
-    mtl >=2.2.2 && <2.4,
-    neat-interpolation,
-    optics,
-    parsec >=3.1.0 && <3.2,
-    pretty-simple,
-    quickcheck-instances,
-    raw-strings-qq,
-    regex-tdfa,
-    row-types,
-    sqlite-simple >=0.4.18 && <0.5,
-    static-ls,
-    stm,
-    template-haskell >=2.19.0 && <2.24,
-    text >=2.0.1 && <2.2,
-    text-range,
-    text-rope ==0.3,
-    time >=1.0 && <2.0,
-    transformers >=0.5.6.2 && <0.7,
-    tree-sitter-ast,
-    tree-sitter-haskell,
-    tree-sitter-simple,
-    typed-process,
-    unliftio >=0.2.1 && <0.3,
-    unliftio-core >=0.2.1 && <0.3,
-    unordered-containers >=0.2 && <0.3
-
+      Diff
+    , QuickCheck
+    , aeson >=2 && <2.3
+    , array >=0.5.4 && <0.6
+    , async
+    , base >=4.17.0 && <4.22
+    , bytestring >=0.10 && <0.13
+    , co-log-core ==0.3.*
+    , containers >=0.6.0 && <0.8
+    , cryptohash-md5
+    , directory >=1.3.7 && <1.4
+    , errors >=2.3.0 && <2.4
+    , exceptions
+    , extra >=1.7.12 && <1.9
+    , filepath
+    , fsnotify
+    , ghc >=9.4.3 && <9.13
+    , ghc-paths >=0.1.0 && <0.2
+    , hashable
+    , haskell-ast
+    , haskell-lexer >=1.1.1 && <1.3
+    , hiedb ==0.6.*
+    , hspec ==2.*
+    , lens
+    , lsp >=2.4.0.0 && <2.8.0.0
+    , lsp-types >=2.1.0.0 && <2.4.0.0
+    , mtl >=2.2.2 && <2.4
+    , neat-interpolation
+    , optics
+    , parsec >=3.1.0 && <3.2
+    , pretty-simple
+    , quickcheck-instances
+    , raw-strings-qq
+    , regex-tdfa
+    , row-types
+    , sqlite-simple >=0.4.18 && <0.5
+    , static-ls
+    , stm
+    , template-haskell >=2.19.0 && <2.24
+    , text >=2.0.1 && <2.2
+    , text-range
+    , text-rope ==0.3
+    , time >=1.0 && <2.0
+    , transformers >=0.5.6.2 && <0.7
+    , tree-sitter-ast
+    , tree-sitter-haskell
+    , tree-sitter-simple
+    , typed-process
+    , unliftio >=0.2.1 && <0.3
+    , unliftio-core >=0.2.1 && <0.3
+    , unordered-containers ==0.2.*
   default-language: GHC2021
-
   if flag(dev)
-    ghc-options:
-      -fwrite-ide-info
-      -hiedir
-      .hiefiles
-      -fdefer-type-errors
-      -fno-defer-typed-holes
-      -Werror=deferred-type-errors
-      -Werror=deferred-out-of-scope-variables
+    ghc-options: -fwrite-ide-info -hiedir .hiefiles -fdefer-type-errors -fno-defer-typed-holes -Werror=deferred-type-errors -Werror=deferred-out-of-scope-variables
   main-is: Main.hs
   other-modules:
-    Data.ConcurrentCacheSpec
-    Data.RopeSpec
-    Paths_static_ls
-    Semantic.HirSpec
-    Spec
-    SpecHook
-    StaticLS.HI.FileSpec
-    StaticLS.HIE.FileSpec
-    StaticLS.HISpec
-    StaticLS.HirSpec
-    StaticLS.IDE.CodeActions.AddTypeSigSpec
-    StaticLS.IDE.CodeActions.AutoImportSpec
-    StaticLS.IDE.CodeActions.ParsingSpec
-    StaticLS.IDE.CodeActions.TestUtils
-    StaticLS.IDE.DefinitionSpec
-    StaticLS.IDE.Diagnostics.ParseGHCSpec
-    StaticLS.IDE.HoverSpec
-    StaticLS.IDE.RenameSpec
-    StaticLS.PositionDiffSpec
-    StaticLS.PositionSpec
-    TestData.Mod1
-    TestData.Mod2
-    TestImport
-    TestImport.Annotation
-    TestImport.AnnotationSpec
-    TestImport.Assert
-    TestImport.Compilation
-    TestImport.HieDb
-    TestImport.Placeholder
-    TestImport.PlaceholderSpec
-    TestImport.TestData
-
+      Data.ConcurrentCacheSpec
+      Data.RopeSpec
+      Semantic.HirSpec
+      Spec
+      SpecHook
+      StaticLS.HI.FileSpec
+      StaticLS.HIE.FileSpec
+      StaticLS.HirSpec
+      StaticLS.HISpec
+      StaticLS.IDE.CodeActions.AddTypeSigSpec
+      StaticLS.IDE.CodeActions.AutoImportSpec
+      StaticLS.IDE.CodeActions.ParsingSpec
+      StaticLS.IDE.CodeActions.TestUtils
+      StaticLS.IDE.DefinitionSpec
+      StaticLS.IDE.Diagnostics.ParseGHCSpec
+      StaticLS.IDE.HoverSpec
+      StaticLS.IDE.RenameSpec
+      StaticLS.PositionDiffSpec
+      StaticLS.PositionSpec
+      TestData.Mod1
+      TestData.Mod2
+      TestImport
+      TestImport.Annotation
+      TestImport.AnnotationSpec
+      TestImport.Assert
+      TestImport.Compilation
+      TestImport.HieDb
+      TestImport.Placeholder
+      TestImport.PlaceholderSpec
+      TestImport.TestData
+      Paths_static_ls
   autogen-modules:
-    Paths_static_ls
-
-  build-tool-depends: hspec-discover:hspec-discover >=2 && <3
+      Paths_static_ls
+  build-tool-depends: hspec-discover:hspec-discover == 2.*
