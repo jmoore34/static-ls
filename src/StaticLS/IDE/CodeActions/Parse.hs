@@ -11,7 +11,7 @@ module StaticLS.IDE.CodeActions.Parse (
   getNormalText,
   validHoleFits,
   missingMethods,
-  missingAssociatedType
+  missingAssociatedType,
 ) where
 
 import Control.Monad (guard, (<=<))
