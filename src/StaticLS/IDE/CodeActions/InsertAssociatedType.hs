@@ -10,5 +10,5 @@ codeAction = insertAssociatedType
 insertAssociatedType :: LSP.TextDocumentIdentifier -> LSP.Diagnostic -> T.Text -> LSP.CodeAction
 insertAssociatedType tdi diag ty =
   let rng = insertBelow diag._range
-      txt = T.concat ["    type ", ty, " = ()\n"]
+      txt = T.concat ["    type ", ty, " _ = _\n"]
    in prefer $ quickFix tdi diag "Insert associated type." rng txt

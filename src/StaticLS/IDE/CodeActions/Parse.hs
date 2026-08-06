@@ -8,7 +8,10 @@ module StaticLS.IDE.CodeActions.Parse (
   nonExhaustivePatterns,
   between,
   ident,
-  getNormalText
+  getNormalText,
+  validHoleFits,
+  missingMethods,
+  missingAssociatedType
 ) where
 
 import Control.Monad (guard, (<=<))
@@ -109,10 +112,29 @@ ident :: T.Text
 ident = "[0-9A-Z'\\._a-z]+"
 
 validHoleFits :: NormalText -> Maybe [NormalText]
-validHoleFits = fmap (captures " " ident " ::\\>") . between "Valid hole fits include" "\\|"
+validHoleFits t1 = do
+  (_, _, t2) <- cut "Valid hole fits include" t1
+  Just $ captures " " ident " ::" t2
 
 missingMethods :: NormalText -> Maybe [NormalText]
-missingMethods = fmap (captures "‘" ident "’") . between "No explicit implementation for " " • In the instance declaration"
+missingMethods t1 = do
+  t2 <- between "No explicit implementation for" "In the instance declaration" t1
+  let matches = captures "‘" "[^’]+" "’" t2
+  Just $ fmap (addOperatorParentheses . removeModulePrefix) matches
+
+removeModulePrefix :: NormalText -> NormalText
+removeModulePrefix text =
+  case cut "^.*\\." text of
+    Just (_, _, suffix) -> suffix
+    Nothing -> text
+
+addOperatorParentheses :: NormalText -> NormalText
+addOperatorParentheses (Normal text) =
+  normalize $
+    if text =~ ident
+      then
+        text
+      else "(" <> text <> ")"
 
 missingAssociatedType :: NormalText -> Maybe NormalText
 missingAssociatedType = capture "No explicit associated type or default declaration for ‘" ident "’"
@@ -124,7 +146,7 @@ nonExhaustivePatterns t1 = do
   pure . fmap normalize . filter (/= "...") . getAllTextMatches $ t2 =~ (ident <> "( _)*")
 
 missingFields :: NormalText -> Maybe (NormalText, Maybe NormalText, [NormalText])
-missingFields  t1 = do
+missingFields t1 = do
   (_, _, t2) <- cut "(Fields of|Constructor) ‘" t1
   (constructor, _, t3) <- cut "’ (not initialised:|does not have[^:]*:)" t2
   (fieldsSection, _, t4) <- cut "•" t3
