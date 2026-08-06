@@ -12,4 +12,4 @@ insertMissingMethods :: LSP.TextDocumentIdentifier -> LSP.Diagnostic -> [T.Text]
 insertMissingMethods tdi diag methods =
   let rng = insertBelow diag._range
       txt = T.concat ["    ", T.concat $ fmap (<> " = _\n    ") methods, "\n"]
-   in prefer $ quickFix tdi diag "Insert missing methods." rng txt
+   in prefer $ quickFix tdi diag "Insert missing methods" rng txt
