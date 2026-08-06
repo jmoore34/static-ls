@@ -177,7 +177,6 @@ isValidLineColEnd r (LineCol (Pos line) (Pos col)) =
 linesLength :: Rope -> Int
 linesLength (Rope rope) = fromIntegral . Rope8.lengthInLines $ rope
 
--- | Does not include newline
 getLeadingSpaceCountAtLine :: Pos -> Rope -> Int
 getLeadingSpaceCountAtLine (Pos lineNumber) (Rope rope) = do
   let line = Rope8.toText $ Rope8.getLine (fromIntegral lineNumber) rope
